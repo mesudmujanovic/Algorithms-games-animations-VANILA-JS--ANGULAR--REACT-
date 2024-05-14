@@ -29,7 +29,6 @@ background-color: wheat;
 color: black;
 }
 
-/* second animation */
 @keyframes slideInLeft {
     from {
      transform: translateX(-300px);
@@ -113,3 +112,106 @@ color: black;
 .jump {
     animation: bounce 0.3s linear infinite;
 }
+
+.button {
+    color: black;
+    transition: transform 0.5s,
+                background-color 0.3s,
+                color 0.3s;
+}
+
+.button:hover {
+    transform: translateY(-5px);
+    background-color: aqua;
+    color: red;
+}
+
+.hello {
+    color: red;
+    animation: text 0.5s linear;
+}
+
+@keyframes text {
+    from {
+        transform: translateX(20px);
+    }
+    to {
+        transform: translateY(20px);
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.name {
+   
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    animation: move 2s infinite alternate;
+    animation: complexAnimation 5s  infinite alternate;
+    animation: rotate 4s linear infinite;
+}
+
+@keyframes move {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(200px);
+    }
+}
+
+
+   @keyframes complexAnimation {
+    0% {
+        transform: scale(1);
+        background-color: red;
+    }
+    25% {
+        transform: scale(1.2);
+        background-color: blue;
+    }
+    50% {
+        transform: scale(0.8);
+        background-color: green;
+    }
+    75% {
+        transform: scale(1.4);
+        background-color: yellow;
+    }
+    100% {
+        transform: scale(1);
+        background-color: purple;
+    }
+} 
+
+
+@keyframes rotate {
+    0% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateY(-20px);
+    }
+    40% {
+        transform: translateX(-30px);
+    }
+
+    60% {
+        transform: rotate(180deg);
+    }
+
+    80% {
+        color: red;
+    }
+
+    100%{
+        transform: translateX(0);
+    }
+}
+
