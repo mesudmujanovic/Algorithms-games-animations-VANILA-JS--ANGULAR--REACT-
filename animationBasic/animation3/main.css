@@ -1,0 +1,20 @@
+.box {
+    width: 50px;
+    height: 50px;
+    background-color: aqua;
+    animation: move 2s linear infinite;
+}
+
+@keyframes move {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(50px);
+        box-shadow: -30px 0 30px rgba(6, 1, 1, 0.5);
+    }
+    100% {
+        transform: translateX(100px);
+        box-shadow: -50px 0 40px rgba(7, 2, 2, 0.4);
+    }
+}
