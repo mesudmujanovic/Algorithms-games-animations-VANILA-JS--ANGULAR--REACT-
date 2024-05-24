@@ -1,0 +1,10 @@
+<div *ngIf="randAssocA">
+    <div *ngFor="let items of randAssocA; let i = index"
+    (click)="promeni(items, 'A', i)">
+        <div *ngIf="itemText">
+            {{itemText['A'][i]}}
+        </div>
+    </div>
+    </div>
+    
+    
