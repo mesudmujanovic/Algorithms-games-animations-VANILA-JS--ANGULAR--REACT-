@@ -20,5 +20,45 @@
         float: left;
         background-color: cornflowerblue;
         margin: 6px; 
+        &.red {
+            background-color: darkred;
+            transition: background-color 0.5s;
+          }
+          &.blue {
+            background-color: darkblue;
+            transition: background-color 0.5s;
+          }
+          &.green {
+            background-color: darkgreen;
+            transition: background-color 0.5s;
+          }
+          &.pink {
+            background-color: deeppink;
+            transition: background-color 0.5s;
+          }
+          &.yellow {
+            background-color: greenyellow;
+            transition: background-color 0.5s;
+          }
+          &.purple {
+            background-color: purple;
+            transition: background-color 0.5s;
+          }
+          &.orange {
+            background-color: darkorange;
+            transition: background-color 0.5s;
+          }
+          &.cyan {
+            background-color: darkcyan;
+            transition: background-color 0.5s;
+          }
+          &.grey {
+            background-color: brown;
+            transition: background-color 0.5s;
+          }
+          &.magenta {
+            background-color: darkmagenta;
+            transition: background-color 0.5s;
+          }
     }
 }

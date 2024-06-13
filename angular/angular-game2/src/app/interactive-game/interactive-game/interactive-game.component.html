@@ -1,7 +1,9 @@
 <div>
     <h1 class="header-text">Fill with dots</h1>
     <div class="game-container">
-        <div class="dot" *ngFor="let dot of dots">
-        </div>
+        <div class="dot" 
+             *ngFor="let dot of dots; let i = index"
+             #dotRefs
+             (mouseover)="changeStyle(dotRefs)">         </div>
     </div>
 </div>
