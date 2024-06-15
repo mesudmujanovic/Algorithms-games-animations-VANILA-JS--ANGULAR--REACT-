@@ -11,14 +11,14 @@
     border: 2px solid aqua;
     border-radius: 5px;
     overflow: hidden;
-
+  
     .dot {
         width: 40px;
         height: 40px;
         border-radius: 50%;
         float: left;
         margin: 6px; 
-        background-color: red;
+
         &.red {
             background-color: darkred;
             transition: background-color 0.5s;
@@ -98,7 +98,7 @@
         height: 40%;
         background-color: aqua;
         transform-origin: bottom center;
-        animation: rotateClockwise 4s linear;
+        animation: rotateClockwise 25s linear;
       }
     }
 
@@ -135,7 +135,7 @@
       margin: 12px !important;
       border-width: 1px;
         .dot {
-          width: 20px;
+          width: 17px;
           height: 30px;
           margin: 2px;
       }

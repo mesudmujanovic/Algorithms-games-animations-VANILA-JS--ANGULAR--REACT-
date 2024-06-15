@@ -1,6 +1,6 @@
 export class RandomColors {
-    colors: string[] = [ 'red', 'green', 'blue', 'pink', 'purple', 
-    'orange', 'yellow', 'cyan', 'grey', 'magenta'];
+    colors: string[] = [ 'red', 'green', 'blue', 'purple', 
+    'orange', 'yellow', 'cyan', 'brown', 'magenta'];
     index: number = 0;
 
     randomColorsIndex() {
