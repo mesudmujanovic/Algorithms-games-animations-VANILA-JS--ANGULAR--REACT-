@@ -4,18 +4,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { CommonModule } from '@angular/common';
-import { InteractiveGameComponent } from './interactive-game/interactive-game/interactive-game.component';
+import { InteractiveGameModule } from './interactive-game/interactive-game.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    InteractiveGameComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CommonModule 
+    CommonModule,
+    InteractiveGameModule
   ],
   providers: [],
   bootstrap: [AppComponent]

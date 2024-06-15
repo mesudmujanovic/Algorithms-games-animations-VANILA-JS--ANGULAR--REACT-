@@ -1,9 +1,15 @@
-<div>
+<div class="text-center wrapper">
     <h1 class="header-text">Fill with dots</h1>
     <div class="game-container">
-        <div class="dot" 
-             *ngFor="let dot of dots; let i = index"
-             #dotRefs
-             (mouseover)="changeStyle(dotRefs)">         </div>
+        <div *ngIf="isGameStarted">
+            <div class="dot" *ngFor="let dot of dots; let i = index" (mouseover)="changeStyle($event)">
+            </div>
+        </div>
+    </div>
+    <div class="result">
+        <p class="counter" *ngIf="isGameStarted">
+            <span class="d-none">{{counter$ | async}}</span>
+        </p>
+        <button class="button" (click)="startGame()" [disabled]="isGameStarted">Start Game</button>
     </div>
 </div>

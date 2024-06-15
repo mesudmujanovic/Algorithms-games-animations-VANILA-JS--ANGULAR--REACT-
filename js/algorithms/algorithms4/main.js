@@ -1,8 +1,8 @@
-var ime = "ss"
+let ime = "ss"
 
 function a () {
     function b () {
-        var ime = "mesud"
+        let ime = "mesud"
     }
     b();
     console.log(ime);
