@@ -1,7 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { RandomColors } from './random-colors';
-import { count, interval, map, Observable, Subscription, takeWhile, timer } from 'rxjs';
-import { animate } from '@angular/animations';
+import { count, interval, map, Observable, takeWhile, timer } from 'rxjs';
 
 @Component({
   selector: 'app-interactive-game',
@@ -9,7 +8,7 @@ import { animate } from '@angular/animations';
   styleUrls: ['./interactive-game.component.scss']
 })
 export class InteractiveGameComponent implements OnInit {
-  dots: number[] = Array.from(Array(112).keys());
+  dots: number[] = Array.from(Array(96).keys());
   colorPicker: RandomColors = new RandomColors();
   counter$: Observable<number> | undefined;
   private readonly initialCounter = 25;
