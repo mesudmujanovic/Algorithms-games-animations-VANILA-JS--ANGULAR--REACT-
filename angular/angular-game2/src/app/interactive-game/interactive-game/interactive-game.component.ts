@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnInit, QueryList, Renderer2, ViewChildren } from '@angular/core';
+import { Component, ElementRef, QueryList, Renderer2, ViewChildren } from '@angular/core';
 import { RandomColors } from './random-colors';
-import { interval, map, Observable, of, takeWhile, tap } from 'rxjs';
+import { interval, Observable, of } from 'rxjs';
 import { Counter } from './counter';
 
 @Component({
@@ -49,6 +49,6 @@ export class InteractiveGameComponent {
   }
 
   won() {
-   alert("Won")
+    alert("Won")
   }
 }

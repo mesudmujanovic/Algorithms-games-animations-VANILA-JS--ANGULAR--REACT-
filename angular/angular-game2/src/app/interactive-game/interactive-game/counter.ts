@@ -1,4 +1,4 @@
-import {map, Observable, of, takeWhile, tap } from "rxjs";
+import {map, Observable, takeWhile, tap } from "rxjs";
 
 export class Counter {
     private readonly initalCounter: number = 25;
