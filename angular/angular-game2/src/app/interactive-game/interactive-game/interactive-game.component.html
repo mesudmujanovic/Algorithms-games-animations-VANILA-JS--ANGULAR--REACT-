@@ -1,6 +1,7 @@
 <div class="text-center wrapper">
     <h1 class="header-text">Dot Color Challenge</h1>
-    <div  class="game-container">
+    <div  class="game-container"
+          *ngIf="isGameStarted">
         <div class="dot"
          *ngFor="let dot of dots | async; let i = index"
          #dot
@@ -9,8 +10,9 @@
         </div>
     </div>
     <div class="result">
-        <p  class="counter">
+        <p *ngIf="isGameStarted" class="counter">
             <span class="d-none">{{counter$ | async}}</span>
         </p>
+        <button class="button" (click)="startGame()">Start</button>
     </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, QueryList, Renderer2, ViewChildren } from '@angular/core';
 import { RandomColors } from './random-colors';
-import { interval, map, Observable, of, takeWhile } from 'rxjs';
+import { interval, map, Observable, of, takeWhile, tap } from 'rxjs';
+import { Counter } from './counter';
 
 @Component({
   selector: 'app-interactive-game',
@@ -13,8 +14,8 @@ export class InteractiveGameComponent {
 
   dots: Observable<number[]> = of(Array.from(Array(96).keys()));
   colorPicker: RandomColors = new RandomColors();
-  counter$: Observable<number> | undefined;
-  private readonly initialCounter = 25;
+  counterClass: Counter = new Counter();
+  counter$: Observable<number> = interval(1000);;
   isGameStarted: boolean = false;
 
   constructor(private renderer: Renderer2) {
@@ -38,20 +39,16 @@ export class InteractiveGameComponent {
 
     if (paintedDotsCount == 96) {
       this.isGameStarted = false;
-      console.log('Kviz je završen!');
+      this.won();
     }
   }
 
-  fCounter() {
-    this.counter$ = interval(1000).pipe(
-      map(count => this.initialCounter - count),
-      takeWhile(count => count >= 0)
-    );
-  }
   startGame() {
-    if (!this.isGameStarted) {
-      this.fCounter();
-      this.isGameStarted = true;
-    }
+    this.isGameStarted = true;
+    this.counterClass.startCounter(this.counter$).subscribe();
+  }
+
+  won() {
+   alert("Won")
   }
 }
