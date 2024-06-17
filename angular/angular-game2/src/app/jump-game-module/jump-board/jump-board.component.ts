@@ -1,23 +1,59 @@
-import { Component,ElementRef, Renderer2 } from '@angular/core';
-import { interval, Subscription } from 'rxjs';
+import { Component,ElementRef, OnDestroy, Renderer2 } from '@angular/core';
+import { interval, Subject, Subscription, takeUntil, timeout, timer } from 'rxjs';
 
 @Component({
   selector: 'app-jump-board',
   templateUrl: './jump-board.component.html',
   styleUrls: ['./jump-board.component.scss']
 })
-export class JumpBoardComponent {
+export class JumpBoardComponent implements OnDestroy {
   character!: HTMLElement;
   block!: HTMLElement;
+  blockSecond!: HTMLElement;
   jumpCount: number = 0;
   checkSubscription: Subscription | undefined;
+  sourceTimer = interval(2000);
+  subscription: Subscription | undefined;
+  runTimerAgain: boolean = false;
+  private stop$ = new Subject<void>();
 
   constructor(private renderer: Renderer2, private elementRef: ElementRef) {}
 
   ngOnInit(): void {
     this.character = this.elementRef.nativeElement.querySelector('#character');
     this.block = this.elementRef.nativeElement.querySelector('#block');
+    this.blockSecond = this.elementRef.nativeElement.querySelector('#block-second');
+    // this.startTimer();
   }
+
+  startTimer() {
+    this.subscription = this.sourceTimer.subscribe(() => {
+      const blocksecond = 'blocksecond';
+      const randomLeft = Math.floor(Math.random() * 71);
+      this.renderer.addClass(this.blockSecond, blocksecond);
+      this.renderer.setStyle(this.blockSecond, 'bottom', `${randomLeft}px`);
+      console.log("Animation started")
+      this.ngOnDestroy();
+      this.startSecondTimer();
+
+    });
+  }
+
+  startSecondTimer() {
+    timer(4000).subscribe(() => {
+      console.log("Second timer executed after 2 seconds");
+      const blocksecond = 'blocksecond';
+      this.renderer.removeClass(this.blockSecond, blocksecond);  
+      this.startTimer();
+      });
+  }
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = undefined;
+    }
+  }
+  
 
   jump(): void {
     const className = 'animate-jump';
@@ -63,7 +99,4 @@ export class JumpBoardComponent {
     this.jumpCount = 0;
   }
 
-  ngOnDestroy(): void {
-    this.checkSubscription?.unsubscribe(); 
-  }
 }

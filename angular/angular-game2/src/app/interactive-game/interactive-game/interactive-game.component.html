@@ -1,8 +1,11 @@
 <div class="text-center wrapper">
     <h1 class="header-text">Dot Color Challenge</h1>
-    <div class="game-container" *ngIf="isGameStarted">
-        <div class="dot" *ngFor="let dot of dots | async;" #dot (mouseover)="changeStyle($event)"
-            (mouseenter)="changeStyle($event)">
+    <div class="game-container">
+        <div class="dot"
+          *ngFor="let dot of dots | async;" 
+          #dot 
+          (mouseover)="changeStyle($event)"
+          (mouseenter)="changeStyle($event)">
         </div>
     </div>
     <div class="result">

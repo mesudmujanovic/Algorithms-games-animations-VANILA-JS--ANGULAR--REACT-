@@ -2,12 +2,13 @@
     width: 500px;
     height: 200px;
     border: 1px solid black;
+    overflow: hidden;
 
     #character {
         width: 20px;
         height: 50px;
         position: relative;
-        top: 150px;
+        top: 100px;
         background-color: red;
     }
 
@@ -18,19 +19,39 @@
       position: relative;
       top: 130px;
       background-color: blue;
-      animation: block 1.5s infinite linear;
+      animation: block 4s infinite linear;
+    }
+
+    #block-second {
+        width: 20px;
+        height: 20px;
+        position: relative;
+        background-color: blue;
+        left: 480px;
+        bottom: 30px;
     }
 
     @keyframes jump {
      0%{top: 150px;}
-     50%{top: 100px;}
-     75%{top: 100px;}
+     50%{top: 50px;}
+     75%{top: 30px;}
      100%{top: 150px;}   
     }
 
     @keyframes block {
         0%{left: 480px;}
         100%{left: -20px;}
+    }
+
+    @keyframes blocksecond {
+        0% { left: 480px; }
+       100% { left: -20px; }
+       }
+   
+  
+    .blocksecond {
+        animation: blocksecond 1s linear;
+        animation-delay: 2s;
     }
 
     .animate-jump {
