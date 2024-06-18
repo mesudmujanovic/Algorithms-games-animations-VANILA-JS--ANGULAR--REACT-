@@ -1,5 +1,6 @@
 import { Component,ElementRef, OnDestroy, Renderer2 } from '@angular/core';
 import { interval, Subject, Subscription, takeUntil, timeout, timer } from 'rxjs';
+import { JumpService } from './service/jump.service';
 
 @Component({
   selector: 'app-jump-board',
@@ -15,27 +16,28 @@ export class JumpBoardComponent implements OnDestroy {
   sourceTimer = interval(2000);
   subscription: Subscription | undefined;
   runTimerAgain: boolean = false;
-  private stop$ = new Subject<void>();
 
-  constructor(private renderer: Renderer2, private elementRef: ElementRef) {}
+  constructor(private renderer: Renderer2,
+              private elementRef: ElementRef,
+              private jumpService: JumpService) {}
 
+              
   ngOnInit(): void {
     this.character = this.elementRef.nativeElement.querySelector('#character');
     this.block = this.elementRef.nativeElement.querySelector('#block');
     this.blockSecond = this.elementRef.nativeElement.querySelector('#block-second');
-    // this.startTimer();
+    this.startTimer();
+    this.jumpService.startChecking(this.character, this.block, this.blockSecond, this.dead.bind(this));
   }
+
 
   startTimer() {
     this.subscription = this.sourceTimer.subscribe(() => {
       const blocksecond = 'blocksecond';
-      const randomLeft = Math.floor(Math.random() * 71);
       this.renderer.addClass(this.blockSecond, blocksecond);
-      this.renderer.setStyle(this.blockSecond, 'bottom', `${randomLeft}px`);
       console.log("Animation started")
       this.ngOnDestroy();
       this.startSecondTimer();
-
     });
   }
 
@@ -47,7 +49,9 @@ export class JumpBoardComponent implements OnDestroy {
       this.startTimer();
       });
   }
+
   ngOnDestroy(): void {
+    this.jumpService.stopChecking();
     if (this.subscription) {
       this.subscription.unsubscribe();
       this.subscription = undefined;
@@ -63,25 +67,12 @@ export class JumpBoardComponent implements OnDestroy {
     }
 
     this.timeout(this.character, className);
-    this.checkDead();
   }
 
   timeout(domElement: HTMLElement, className: string): void {
     setTimeout(() => {
       this.renderer.removeClass(domElement, className);
     }, 500);
-  }
-
-  checkDead(): void {
-    this.checkSubscription?.unsubscribe();
-    this.checkSubscription = interval(10).subscribe(() => {
-      const characterTop = parseInt(window.getComputedStyle(this.character).getPropertyValue('top'));
-      const blockLeft = parseInt(window.getComputedStyle(this.block).getPropertyValue('left'));
-
-      if (blockLeft < 20 && blockLeft > 0 && characterTop >= 130) {
-        this.dead();
-      }
-    });
   }
 
   dead(): void {
