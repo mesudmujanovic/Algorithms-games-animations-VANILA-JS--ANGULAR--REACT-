@@ -1,5 +1,5 @@
-import { Component,ElementRef, OnDestroy, Renderer2 } from '@angular/core';
-import { interval, Subject, Subscription, takeUntil, timeout, timer } from 'rxjs';
+import { Component, ElementRef, OnDestroy, Renderer2, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { interval, Subscription } from 'rxjs';
 import { JumpService } from './service/jump.service';
 
 @Component({
@@ -7,47 +7,31 @@ import { JumpService } from './service/jump.service';
   templateUrl: './jump-board.component.html',
   styleUrls: ['./jump-board.component.scss']
 })
-export class JumpBoardComponent implements OnDestroy {
-  character!: HTMLElement;
-  block!: HTMLElement;
-  blockSecond!: HTMLElement;
+export class JumpBoardComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  @ViewChild('character', { static: true }) character!: ElementRef;
+  @ViewChild('block', { static: true }) block!: ElementRef;
+  @ViewChild('blockSecond', { static: true }) blockSecond!: ElementRef;
+
   jumpCount: number = 0;
   checkSubscription: Subscription | undefined;
   sourceTimer = interval(2000);
   subscription: Subscription | undefined;
-  runTimerAgain: boolean = false;
 
   constructor(private renderer: Renderer2,
-              private elementRef: ElementRef,
               private jumpService: JumpService) {}
 
-              
   ngOnInit(): void {
-    this.character = this.elementRef.nativeElement.querySelector('#character');
-    this.block = this.elementRef.nativeElement.querySelector('#block');
-    this.blockSecond = this.elementRef.nativeElement.querySelector('#block-second');
     this.startTimer();
-    this.jumpService.startChecking(this.character, this.block, this.blockSecond, this.dead.bind(this));
   }
 
-
-  startTimer() {
-    this.subscription = this.sourceTimer.subscribe(() => {
-      const blocksecond = 'blocksecond';
-      this.renderer.addClass(this.blockSecond, blocksecond);
-      console.log("Animation started")
-      this.ngOnDestroy();
-      this.startSecondTimer();
-    });
-  }
-
-  startSecondTimer() {
-    timer(4000).subscribe(() => {
-      console.log("Second timer executed after 2 seconds");
-      const blocksecond = 'blocksecond';
-      this.renderer.removeClass(this.blockSecond, blocksecond);  
-      this.startTimer();
-      });
+  ngAfterViewInit(): void {
+    this.jumpService.startChecking(
+      this.block.nativeElement, 
+      this.character.nativeElement, 
+      this.blockSecond.nativeElement,       
+      this.dead.bind(this)
+    );
   }
 
   ngOnDestroy(): void {
@@ -57,16 +41,31 @@ export class JumpBoardComponent implements OnDestroy {
       this.subscription = undefined;
     }
   }
-  
+
+  startTimer() {
+    this.subscription = this.sourceTimer.subscribe(() => {
+      const blocksecond = 'blocksecond';
+      this.renderer.addClass(this.blockSecond.nativeElement, blocksecond);
+      this.startSecondTimer();
+    });
+  }
+
+  startSecondTimer() {
+    setTimeout(() => {
+      const blocksecond = 'blocksecond';
+      this.renderer.removeClass(this.blockSecond.nativeElement, blocksecond);  
+      this.startTimer();
+    }, 4000);
+  }
 
   jump(): void {
     const className = 'animate-jump';
-    if (!this.character.classList.contains(className)) {
-      this.renderer.addClass(this.character, className);
+    if (!this.character.nativeElement.classList.contains(className)) {
+      this.renderer.addClass(this.character.nativeElement, className);
       this.jumpCount++;
     }
-
-    this.timeout(this.character, className);
+    this.timeout(this.character.nativeElement, className);
+    this.startSecondTimer();
   }
 
   timeout(domElement: HTMLElement, className: string): void {
@@ -77,17 +76,16 @@ export class JumpBoardComponent implements OnDestroy {
 
   dead(): void {
     this.jumpCount = 0;
-    this.block.style.animation = 'none';
-    this.block.style.display = 'none';
+    this.block.nativeElement.style.animation = 'none';
+    this.block.nativeElement.style.display = 'none';
     alert('You lose');
     this.resetGame();
   }
-  
+
   resetGame(): void {
-    this.block.style.left = '480px';
-    this.block.style.animation = '';
-    this.block.style.display = 'block';
+    this.block.nativeElement.style.left = '480px';
+    this.block.nativeElement.style.animation = '';
+    this.block.nativeElement.style.display = 'block';
     this.jumpCount = 0;
   }
-
 }

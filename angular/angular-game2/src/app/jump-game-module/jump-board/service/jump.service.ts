@@ -9,12 +9,14 @@ export class JumpService {
 
   constructor() {}
 
-  startChecking(character: HTMLElement, block: HTMLElement, blockSecond: HTMLElement, deadCallback: () => void): void {
+  startChecking(block: HTMLElement, character: HTMLElement, blockSecond: HTMLElement, deadCallback: () => void): void {
     this.checkSubscription?.unsubscribe();
-    this.checkSubscription = interval(10).subscribe(() => {
+    this.checkSubscription = interval(100).subscribe(() => {
       const characterTop = parseInt(window.getComputedStyle(character).getPropertyValue('top'));
       const blockLeft = parseInt(window.getComputedStyle(block).getPropertyValue('left'));
       const blockRandom = parseInt(window.getComputedStyle(blockSecond).getPropertyValue('left'));
+
+      console.log(`Character Top: ${characterTop}, Block Left: ${blockLeft}, Block Random: ${blockRandom}`);
 
       if (this.isCollision(blockLeft, characterTop, 130, 150) || this.isCollision(blockRandom, characterTop, 0, 60)) {
         deadCallback();
@@ -22,8 +24,8 @@ export class JumpService {
     });
   }
 
-  private isCollision(blockPosition: number, characterTop: number, minTop: number, maxTop: number): boolean {
-    return blockPosition < 20 && blockPosition > 0 && characterTop >= minTop && characterTop <= maxTop;
+  private isCollision(block: number, character: number, minTop: number, maxTop: number): boolean {
+    return block < 20 && block > 0 && character >= minTop && character <= maxTop;
   }
 
   stopChecking(): void {

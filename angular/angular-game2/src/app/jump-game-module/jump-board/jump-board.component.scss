@@ -8,7 +8,7 @@
         width: 20px;
         height: 50px;
         position: relative;
-        top: 130px;
+        top: 30px;
         background-color: red;
     }
 
@@ -22,7 +22,7 @@
       animation: block 4s infinite linear;
     }
 
-    #block-second {
+    #blockSecond {
         width: 20px;
         height: 20px;
         position: relative;
@@ -50,7 +50,7 @@
    
   
     .blocksecond {
-        animation: blocksecond 1s linear;
+        animation: blocksecond 2s linear;
         animation-delay: 2s;
     }
 
